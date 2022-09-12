@@ -106,7 +106,7 @@ public class ListDemo
             String n = iterator.next();
             if(n.equals("Harry")){            //     staff.remove('Diana');
             // }
-        }
+            }
         }
         
 

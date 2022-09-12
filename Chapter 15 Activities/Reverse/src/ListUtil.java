@@ -12,6 +12,16 @@ public class ListUtil
     */
     public static void reverse(LinkedList<String> strings)
     {
-        ...
+        LinkedList<String> reverse_strings = new LinkedList<>();
+        while(strings.size() > 0){
+            reverse_strings.add(strings.removeLast());
+        }
+        strings.clear();
+        while(reverse_strings.size() > 0){
+            strings.add(reverse_strings.removeFirst());
+        }
+        System.out.println(strings);
+        
+
     }
 }
