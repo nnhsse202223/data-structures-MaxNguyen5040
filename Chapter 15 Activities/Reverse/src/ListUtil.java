@@ -17,6 +17,12 @@ public class ListUtil
             reverse_strings.add(strings.removeLast());
         }
         strings.clear();
+
+
+
+
+
+        
         while(reverse_strings.size() > 0){
             strings.add(reverse_strings.removeFirst());
         }

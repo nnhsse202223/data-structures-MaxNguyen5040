@@ -13,7 +13,34 @@ public class WordAnalysis
     public static void main(String[] args)
         throws FileNotFoundException
     {
+        /*
+         * read the dictionary and the novel
+         */
+        Set<String> dictionaryWords = readWords("src/words");
+         Set<String> novelWords = readWords("src/throughTheLookingGlass,txt");
+         //1. promt all the words that are in the novel but not the dict
+         for(String word : novelWords){
+            if(!dictionaryWords.contains(word)){
+                System.out.println(word);
+            }
+
+         
+        }
+        System.out.println(novelWords);
+
+
+
+        //print the number of unique words >3 letters
+        Iterator<String> i =novelWords.iterator();
+        while(i.hasNext()){
+            if (i.next().length() <= 3){
+                i.remove();
+            }
+        }
+        System.out.println(novelWords.size());
     }
+
+    
 
     /**
      * Reads all words from a file.
