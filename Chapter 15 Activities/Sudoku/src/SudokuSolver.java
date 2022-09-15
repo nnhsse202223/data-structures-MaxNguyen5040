@@ -36,10 +36,31 @@ public class SudokuSolver {
         }
 
         // create the list of sets for each row (this.rows)
-        // ...
+        this.rows = new ArrayList<Set<Integer>>();
+        for(int r = 0;r<9;r++){
+            Set<Integer> tempSet = new HashSet<>();
+            for(int r2 = 0; r2<9; r2++){
+                if(grid[r][r2] != 0){
+                    tempSet.add(grid[r][r2]);
+                }
+            }
+            this.rows.add(tempSet);
+        }
+        
+
 
         // create the list of sets for each col (this.cols)
-        // ...
+        this.cols = new ArrayList<Set<Integer>>();
+        for(int c = 0;c<9;c++){
+            Set<Integer> tempSet2 = new HashSet<>();
+            for(int c2 = 0; c2<9; c2++){
+                if(grid[c2][c] != 0){
+                    tempSet2.add(grid[c2][c]);
+                }
+            }
+            this.cols.add(tempSet2);
+        }
+
 
         // create the list of sets for each square (this.squares)
         /* the squares are added to the list row-by-row:
@@ -47,10 +68,37 @@ public class SudokuSolver {
             3 4 5
             6 7 8
          */
-        // ...
+        this.squares = new ArrayList<Set<Integer>>();
+        for(int s1 = 0; s1 < N; s1+=3){
+            
+            for(int s2 = 0; s2 < N; s2+=3){
+
+                Set<Integer> tempSet3 = new HashSet<>();
+
+                for(int sr = 0; sr < M; sr++){
+                    for(int sc = 0; sc < M; sc++){
+                        if(this.grid[sr+s1][sc+s2] != 0){
+                            tempSet3.add(this.grid[sr+s1][sc+s2]);
+                        }
+                
+
+                    }   
+                
+
+                }   
+                this.squares.add(tempSet3);
+
+            } 
+        }
+
+
+
 
         // create a hash set for [1..9] (this.nums)
-        // ...
+        this.nums = new HashSet<>();
+        for(int n = 0; n < 10; n++){
+            this.nums.add(n);
+        }
 
         // visually inspect that all the sets are correct
         for (int row = 0; row < N; row++) {
@@ -139,15 +187,15 @@ public class SudokuSolver {
     }
 
     public static void main(String[] args) {
-        String fileName = "src/puzzle1.txt";
+        String fileName = "C:/Users/amnguyen2/Desktop/data-structures-MaxNguyen5040/Chapter 15 Activities/Sudoku/src/puzzle1.txt";
 
         SudokuSolver solver = new SudokuSolver(fileName);
         System.out.println(solver);
-        if (solver.solve()) {
-            System.out.println("Solved!");
-            System.out.println(solver);
-        } else {
-            System.out.println("Unsolveable...");
-        }
+        // if (solver.solve()) {
+        //     System.out.println("Solved!");
+        //     System.out.println(solver);
+        // } else {
+        //     System.out.println("Unsolveable...");
+        // }
     }
 }
