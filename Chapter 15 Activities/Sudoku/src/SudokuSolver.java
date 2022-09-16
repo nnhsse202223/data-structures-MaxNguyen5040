@@ -53,7 +53,7 @@ public class SudokuSolver {
         this.cols = new ArrayList<Set<Integer>>();
         for(int c = 0;c<9;c++){
             Set<Integer> tempSet2 = new HashSet<>();
-            for(int c2 = 0; c2<9; c2++){
+            for(int c2 = 0; c2<N; c2++){
                 if(grid[c2][c] != 0){
                     tempSet2.add(grid[c2][c]);
                 }
@@ -80,23 +80,16 @@ public class SudokuSolver {
                         if(this.grid[sr+s1][sc+s2] != 0){
                             tempSet3.add(this.grid[sr+s1][sc+s2]);
                         }
-                
-
                     }   
-                
-
                 }   
                 this.squares.add(tempSet3);
 
             } 
         }
 
-
-
-
         // create a hash set for [1..9] (this.nums)
         this.nums = new HashSet<>();
-        for(int n = 0; n < 10; n++){
+        for(int n = 1; n < 10; n++){
             this.nums.add(n);
         }
 
@@ -143,7 +136,10 @@ public class SudokuSolver {
             algorithm is correct.
          */
         Set<Integer> possibleNums = new HashSet<Integer>(this.nums);
-        // ...
+        possibleNums.removeAll(this.rows.get(nextRow));
+        possibleNums.removeAll(this.cols.get(nextCol));
+        possibleNums.removeAll(this.squares.get((nextRow/3) * 3 + nextCol / 3));
+
 
         // if there are no possible numbers, we cannot solve the board in its current state
         if (possibleNums.isEmpty()) {
@@ -153,7 +149,11 @@ public class SudokuSolver {
         // try each possible number
         for (Integer possibleNum : possibleNums) {
             // update the grid and all three corresponding sets with possibleNum
-            // ...
+            this.grid[nextRow][nextCol]  = possibleNum;
+            this.rows.get(nextRow).add(possibleNum);
+            this.cols.get(nextCol).add(possibleNum);
+            this.squares.get((nextRow/M) *M + nextCol / M).add(possibleNum);
+
 
             // recursively solve the board
             if (this.solve()) {
@@ -165,7 +165,11 @@ public class SudokuSolver {
                  element in the grid back to 0 and removing possibleNum from all three corresponding
                  sets.
                  */
-                // ...
+                this.grid[nextRow][nextCol] = 0;
+                this.rows.get(nextRow).remove(possibleNum);
+                this.cols.get(nextCol).remove(possibleNum);
+                this.squares.get((nextRow/M) * M + nextCol / M).remove(possibleNum);
+
             }
         }
 
@@ -191,11 +195,11 @@ public class SudokuSolver {
 
         SudokuSolver solver = new SudokuSolver(fileName);
         System.out.println(solver);
-        // if (solver.solve()) {
-        //     System.out.println("Solved!");
-        //     System.out.println(solver);
-        // } else {
-        //     System.out.println("Unsolveable...");
-        // }
+        if (solver.solve()) {
+            System.out.println("Solved!");
+            System.out.println(solver);
+        } else {
+            System.out.println("Unsolveable...");
+        }
     }
 }
