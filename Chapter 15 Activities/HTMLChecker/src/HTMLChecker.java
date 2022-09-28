@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 /**
@@ -17,13 +18,48 @@ public class HTMLChecker
 {
     public static void main(String[] args)
     {
-        String filename = "src/TagSample1.html";
+        String filename = "C:/Users/amnguyen2/Desktop/data-structures-MaxNguyen5040/Chapter 15 Activities/HTMLChecker/src/TagSample2.html";
 
         try (Scanner in = new Scanner(new File(filename)))
         {
             // Your code goes here
-            . . .
+            String[] tags = in.nextLine().split(" ");
+            ArrayList<String> listTags = new ArrayList<>();
+            for(int i = 0; i< tags.length; i++){
+                listTags.add(tags[i]);
+            }
 
+            while(listTags.size() > 0){
+                Boolean remove = false;
+                String searchTag = listTags.get(0);
+                if(String.valueOf(searchTag.charAt(1)) == "/"){
+                    System.out.println("Starting / tag without a tag before it");
+                    break;
+                }
+                else{
+                    String tagname = searchTag.substring(1, searchTag.length()-1);
+                    for(int u = 0; u < listTags.size(); u++){
+
+                        if(String.valueOf(listTags.get(u).charAt(1)).equals("/")){
+
+                            if(tagname.equals(listTags.get(u).substring(2, searchTag.length()))){ 
+                                listTags.remove(0);
+                                listTags.remove(u-1);
+                                remove = true;
+                            }
+                        }
+                    }
+                    if(remove == false){
+                        System.out.println("No matching tags");
+                        break;
+                    }
+                    
+                }
+                
+                
+            }
+            System.out.println("Valid HTML!");
+                
 
         } catch (FileNotFoundException e)
         {
