@@ -23,7 +23,8 @@ public class LinkedListQueue
     */
     public void firstToLast()
     {
-        . . .
+        Object temp = this.remove();
+        this.add(temp);
 
 
 

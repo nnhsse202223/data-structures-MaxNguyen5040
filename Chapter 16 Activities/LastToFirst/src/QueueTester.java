@@ -12,6 +12,7 @@ public class QueueTester
         q.lastToFirst();
         q.add("Sarah");
         q.add("John");
+        System.out.println("**********************");
         while (!q.empty())
         {
             System.out.print(q.remove() + " ");
