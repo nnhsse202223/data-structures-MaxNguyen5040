@@ -97,4 +97,50 @@ public class BinaryTree
         result.root = root.right;
         return result;
     }
+
+    void preorder(Visitor v)
+    {
+        BinaryTree.preorder(root, v);
+    }
+    void inorder(Visitor v)
+    {
+        BinaryTree.inorder(root, v);
+    }
+    void postorder(Visitor v)
+    {
+        BinaryTree.postorder(root, v);
+
+    }
+    private static void preorder(Node n, Visitor v)
+    {
+        if(n == null)
+        {
+            return;
+        }
+        v.visit(n.data);
+        preorder(n.left, v);
+        preorder(n.right, v);
+    }
+
+    private static void inorder(Node n, Visitor v)
+    {
+        if(n == null)
+        {
+            return;
+        }
+        inorder(n.left, v);
+        v.visit(n.data);
+        inorder(n.right, v);
+    }
+
+    private static void postorder(Node n, Visitor v) // Bottom to top
+    {
+        if(n == null)
+        {
+            return;
+        }
+        postorder(n.left, v);
+        postorder(n.right, v);
+        v.visit(n.data);
+    }
 }

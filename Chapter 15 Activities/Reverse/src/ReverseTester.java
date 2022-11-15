@@ -13,6 +13,7 @@ public class ReverseTester
         employeeNames.addLast("Harry");
         employeeNames.addLast("Romeo");
         employeeNames.addLast("Tom");
+        System.out.println(employeeNames);
 
         ListUtil.reverse(employeeNames);
         System.out.println(employeeNames);

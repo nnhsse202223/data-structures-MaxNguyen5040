@@ -22,7 +22,26 @@ public class LinkedListQueue
     */
     public void lastToFirst()
     {
-        . . .
+        LinkedListQueue temp = new LinkedListQueue();
+        
+        while(!this.empty()){
+            Object temp2 = this.remove();
+            System.out.println(temp2);
+            System.out.println(this.tail);
+            if(this.tail == null){
+                
+                this.add(temp2);
+                while(!temp.empty()){
+                    this.add(temp.remove());
+                }
+                break;        
+            }
+            else{
+                temp.add(temp2); 
+            }
+
+        }
+
 
 
 

@@ -9,7 +9,7 @@ public class QueueTester
         q.add("Tom");
         q.add("Diana");
         q.add("Harry");
-        q.firstToLast();
+        q.lastToFirst();
         while (!q.empty())
         {
             System.out.print(q.remove() + " ");

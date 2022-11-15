@@ -14,8 +14,8 @@ public class MorseCode
     public static void main(String[] args)
     {
         MorseCode.start();  
-        System.out.println(MorseCode.encode("Watson come here"));
-        BTreePrinter.printNode(decodeTree);
+        System.out.println(MorseCode.decode(".-- .- - ... --- -.   -.-. --- -- .   .... . .-. . "));
+       // BTreePrinter.printNode(decodeTree);
     }
 
     public static void start()
@@ -71,9 +71,8 @@ public class MorseCode
      */
     private static void addSymbol(char letter, String code)
     {
-        /*
-            !!! INSERT CODE HERE
-        */
+        codeMap.put(letter, code);
+        treeInsert(letter, code);
     }
 
     /**
@@ -85,9 +84,26 @@ public class MorseCode
      */
     private static void treeInsert(char letter, String code)
     {
-        /*
-            !!! INSERT CODE HERE
-        */
+        TreeNode current = MorseCode.decodeTree;
+        while(code.length() > 0){
+            if(code.charAt(0) == DOT){
+                if(current.getLeft() == null){
+                    TreeNode newNode = new TreeNode(" ", null, null);
+                    current.setLeft(newNode);
+                }
+                current = current.getLeft();
+            }
+            else if (code.charAt(0) == DASH){
+                if(current.getRight() == null){
+                    TreeNode newNode = new TreeNode(" ", null, null);
+                    current.setRight(newNode);
+                }
+                current = current.getRight();
+            }
+            code = code.substring(1);
+        }
+        current.setValue(letter);
+        
     }
 
     /**
@@ -99,10 +115,17 @@ public class MorseCode
     public static String encode(String text)
     {
         StringBuffer morse = new StringBuffer(400);
-
-        /*
-            !!! INSERT CODE HERE
-        */
+        text = text.toUpperCase();
+        while( text.length() > 0){
+            if(text.charAt(0) == ' '){
+                morse.append(" ");
+            }
+            else{
+                morse.append(codeMap.get(text.charAt(0)));
+            }
+            text = text.substring(1);
+            morse.append(" ");
+        }
 
         return morse.toString();
     }
@@ -117,9 +140,25 @@ public class MorseCode
     {
         StringBuffer text = new StringBuffer(100);
 
-        /*
-            !!! INSERT CODE HERE
-        */
+        TreeNode current = MorseCode.decodeTree;
+
+        while(morse.length() > 0){
+            if(morse.charAt(0) == ' '){
+                if(morse.charAt(0) == ' '){
+                    text.append(" ");
+                }
+                else{
+                    text.append(current.getValue());
+                }
+            }
+            else if(morse.charAt(0) == DOT){
+                current = current.getLeft();
+            }
+            else if (morse.charAt(0) == DASH){
+                current = current.getRight();
+            }
+            morse = morse.substring(1);
+        }
 
         return text.toString();
     }
