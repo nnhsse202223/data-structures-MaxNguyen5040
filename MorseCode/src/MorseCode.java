@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
+
 public class MorseCode
 {
     private static final char DOT = '.';
@@ -13,10 +14,68 @@ public class MorseCode
 
     public static void main(String[] args)
     {
+
         MorseCode.start();  
+        // BTreePrinter.printNode(decodeTree);
         System.out.println(MorseCode.decode(".-- .- - ... --- -.   -.-. --- -- .   .... . .-. . "));
-       // BTreePrinter.printNode(decodeTree);
     }
+
+    
+    /**
+     * Converts a Morse code message into a text string.  Assumes that dot-dash
+     * sequences for each letter are separated by one space.  Additional spaces are
+     * transferred directly into text.
+     * Returns the plain text message.
+     */
+    public static String decode(String morse)
+    {
+        StringBuffer text = new StringBuffer(100);
+
+        TreeNode current = MorseCode.decodeTree;
+        String last_char = "";
+
+        while(morse.length() > 0){
+            if(morse.charAt(0) == ' '){
+                if(last_char == " "){ //space added to word
+                    text.append(" ");
+                }
+                else{
+                    last_char = current.getValue().toString();
+                    text.append(current.getValue());
+                }
+                current = MorseCode.decodeTree;
+            }
+            else if(morse.charAt(0) == DOT){
+                current = current.getLeft();
+            }
+            else if (morse.charAt(0) == DASH){
+                current = current.getRight();
+            }
+            morse = morse.substring(1);
+        }
+
+        // fixing title case, currently WATSON  COME  HERE
+        String translatedString = text.toString();
+        String formattedString = "";
+        boolean capital = true;
+        while(translatedString.length() > 0){
+            if(translatedString.substring(0, 1) == " "){
+                capital = true;
+            }
+            if(capital == false){
+                formattedString += translatedString.substring(0,1).toLowerCase();
+            }
+            else{
+                formattedString += translatedString.substring(0,1);
+                capital = false;
+            }
+            translatedString = translatedString.substring(1);
+            
+        }
+
+        return formattedString;
+    }
+
 
     public static void start()
     {
@@ -130,39 +189,6 @@ public class MorseCode
         return morse.toString();
     }
 
-    /**
-     * Converts a Morse code message into a text string.  Assumes that dot-dash
-     * sequences for each letter are separated by one space.  Additional spaces are
-     * transferred directly into text.
-     * Returns the plain text message.
-     */
-    public static String decode(String morse)
-    {
-        StringBuffer text = new StringBuffer(100);
-
-        TreeNode current = MorseCode.decodeTree;
-
-        while(morse.length() > 0){
-            if(morse.charAt(0) == ' '){
-                if(morse.charAt(0) == ' '){
-                    text.append(" ");
-                }
-                else{
-                    text.append(current.getValue());
-                }
-            }
-            else if(morse.charAt(0) == DOT){
-                current = current.getLeft();
-            }
-            else if (morse.charAt(0) == DASH){
-                current = current.getRight();
-            }
-            morse = morse.substring(1);
-        }
-
-        return text.toString();
-    }
-}
 
 /**
  * BTreePrinter class courtesy of Karen Ge (@karenge1)
@@ -252,5 +278,7 @@ class BTreePrinter {
 
         return true;
     }
+}
+
 }
 
